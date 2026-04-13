@@ -4,6 +4,38 @@ A production-ready Machine Learning web application that predicts whether a pers
 
 ---
 
+## 🌐 Live Demo
+
+🚀 *Coming Soon... (Will be deployed on Render)*
+
+---
+
+## 📸 Application Screenshots
+
+### 🏠 Home Page
+
+![Home](images/home.png)
+
+---
+
+### 📝 Prediction Form
+
+![Form](images/form.png)
+
+---
+
+### 📊 Prediction Result
+
+![Result](images/result.png)
+
+---
+
+### ⚠️ Health Precautions
+
+![Precautions](images/precautions.png)
+
+---
+
 ## 🚀 Project Overview
 
 The Diabetes Prediction System leverages supervised machine learning algorithms to analyze patient health data and provide real-time predictions. It helps in early detection of diabetes risk, making it useful for healthcare awareness and preliminary diagnosis.
@@ -25,7 +57,7 @@ The Diabetes Prediction System leverages supervised machine learning algorithms 
 
 * **Programming Language:** Python
 * **Framework:** Flask
-* **Machine Learning:** Scikit-learn
+* * **Machine Learning:** Scikit-learn
 * **Libraries:** Pandas, NumPy, Joblib
 * **Frontend:** HTML, CSS
 * **Dataset:** PIMA Indians Diabetes Dataset
@@ -62,15 +94,15 @@ The model is trained on the **PIMA Indians Diabetes Dataset**, which includes me
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/diabetes-prediction-system.git
-cd diabetes-prediction-system
+git clone https://github.com/Yougeshkumar/Diabetes-Prediction-System.git
+cd Diabetes-Prediction-System
 ```
 
 ### 2. Create Virtual Environment
 
 ```bash
 python -m venv venv
-venv\Scripts\activate   # Windows
+venv\Scripts\activate
 ```
 
 ### 3. Install Dependencies
@@ -103,6 +135,7 @@ Diabetes_Prediction/
 ├── requirements.txt
 ├── README.md
 │
+├── images/
 ├── models/
 ├── templates/
 ├── static/
