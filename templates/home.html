@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: #fff;
+            text-align: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background Effect */
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: float 4s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-300px) translateX(100px); opacity: 0; }
+        }
+
+        /* Heartbeat Animation */
+        .heartbeat-container {
+            position: relative;
+            height: 80px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .heartbeat-line {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/EKG_svg.svg/1920px-EKG_svg.svg.png');
+            background-repeat: repeat-x;
+            background-size: contain;
+            animation: heartbeat-move 1.5s linear infinite;
+        }
+
+        @keyframes heartbeat-move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Main Container */
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 10px;
+            padding: 30px 40px;
+            margin: 20px auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4e54c8;
+        }
+
+        p {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            color: #fff;
+            background: #4e54c8;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            background: #6f78ff;
+            transform: scale(1.05);
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 220px;
+            flex: 1 1 calc(33.333% - 20px); /* Adjusting cards to fit in the grid */
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: #4e54c8;
+            margin-bottom: 10px;
+        }
+
+        /* Footer Fix */
+        footer {
+            margin-top: 20px;
+            padding: 20px;
+            background: #333;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design for Small Screens */
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="particle" style="top: 10%; left: 20%; width: 12px; height: 12px; animation-duration: 3s;"></div>
+        <div class="particle" style="top: 30%; left: 50%; animation-duration: 4s;"></div>
+        <div class="particle" style="top: 70%; left: 70%; animation-duration: 5s;"></div>
+        <div class="particle" style="top: 80%; left: 10%; animation-duration: 6s;"></div>
+        <div class="particle" style="top: 50%; left: 90%; width: 10px; height: 10px; animation-duration: 3.5s;"></div>
+    </div>
+
+    <!-- Heartbeat Effect -->
+    <div class="heartbeat-container">
+        <div class="heartbeat-line"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h1>Welcome to the Diabetes Prediction App</h1>
+        <p>Predict the likelihood of diabetes and receive insights based on your health data.</p>
+        <a href="/prediction"><i class="fas fa-chart-line"></i> Start Prediction</a>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features">
+        <div class="card">
+            <i class="fas fa-chart-pie"></i>
+            <h3>Accurate Predictions</h3>
+            <p>Get results backed by reliable models.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-heartbeat"></i>
+            <h3>Health Insights</h3>
+            <p>Track and monitor your health easily.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-user-friends"></i>
+            <h3>Easy to Use</h3>
+            <p>User-friendly and accessible for everyone.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Diabetes Prediction App. All rights reserved.
+    </footer>
+</body>
+</html>

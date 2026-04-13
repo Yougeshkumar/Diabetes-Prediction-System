@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction</title>
+    <style>
+        /* Reset some styles */
+        body, h1, p, label {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Gradient Background */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1000px;
+            box-sizing: border-box;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            flex: 1 1 calc(50% - 20px);
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        input[type="number"], input[type="text"] {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 12px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #5a0fb3, #1e5ecb);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* Result Styling */
+        #result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+            padding: 12px;
+            background-color: #e9f7ef;
+            border: 1px solid #d0f0c0;
+            border-radius: 6px;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diabetes Prediction</h1>
+        <form id="prediction-form" method="POST">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="pregnancies">Pregnancies:</label>
+                    <input type="number" name="pregnancies" placeholder="Enter number of pregnancies" required>
+                </div>
+                <div class="form-group">
+                    <label for="glucose">Glucose:</label>
+                    <input type="number" name="glucose" placeholder="Enter glucose level" required>
+                </div>
+                <div class="form-group">
+                    <label for="blood_pressure">Blood Pressure:</label>
+                    <input type="number" name="blood_pressure" placeholder="Enter blood pressure" required>
+                </div>
+                <div class="form-group">
+                    <label for="skin_thickness">Skin Thickness:</label>
+                    <input type="number" name="skin_thickness" placeholder="Enter skin thickness" required>
+                </div>
+                <div class="form-group">
+                    <label for="insulin">Insulin:</label>
+                    <input type="number" name="insulin" placeholder="Enter insulin level" required>
+                </div>
+                <div class="form-group">
+                    <label for="bmi">BMI:</label>
+                    <input type="text" name="bmi" placeholder="Enter BMI (e.g., 23.5)" required>
+                </div>
+                <div class="form-group">
+                    <label for="diabetes_pedigree_function">Diabetes Pedigree Function:</label>
+                    <input type="text" name="diabetes_pedigree_function" placeholder="Enter DPF value" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" name="age" placeholder="Enter age" required>
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="submit" id="predict-button">Predict</button>
+                <button type="reset" id="reset-button">Reset</button>
+            </div>
+        </form>
+
+        <!-- Result Section -->
+        <div id="result">
+            <h2>Prediction Result:</h2>
+            <p id="result-output"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("prediction-form");
+        const resultSection = document.getElementById("result");
+        const resultOutput = document.getElementById("result-output");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent page reload
+            resultSection.style.display = "none"; // Hide previous result
+
+            // Simulated backend prediction
+            setTimeout(() => {
+                const isDiabetic = Math.random() > 0.5; // Random result: true (positive) or false (negative)
+                if (isDiabetic) {
+                    resultOutput.textContent = "Positive for Diabetes.";
+                } else {
+                    const yearsToDiabetes = Math.floor(Math.random() * 10) + 1; // Random years (1 to 10)
+                    resultOutput.textContent = `Currently, you do not have diabetes. You might be at risk in approximately ${yearsToDiabetes} year(s).`;
+                }
+                resultSection.style.display = "block";
+            }, 1000); // Simulate delay
+        });
+
+        // Reset button clears the result and form
+        document.getElementById("reset-button").addEventListener("click", function () {
+            resultSection.style.display = "none";
+            resultOutput.textContent = "";
+        });
+    </script>
+</body>
+</html>

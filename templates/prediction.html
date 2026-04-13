@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction</title>
+    <style>
+        /* Reset some styles */
+        body, h1, p, label {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Gradient Background */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1000px;
+            box-sizing: border-box;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            flex: 1 1 calc(50% - 20px);
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        input[type="number"], input[type="text"] {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 12px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #5a0fb3, #1e5ecb);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* Result Styling */
+        #result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+            padding: 12px;
+            background-color: #e9f7ef;
+            border: 1px solid #d0f0c0;
+            border-radius: 6px;
+            display: none; /* Initially hidden */
+        }
+
+        #precautions {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f3f4f6;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            display: none;
+        }
+
+        /* Precaution List */
+        #precaution-output ul {
+            list-style-type: none;
+            padding-left: 20px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        #precaution-output ul li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        #precaution-output ul li i {
+            margin-right: 10px;
+            color: #6a11cb;
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #555;
+            font-weight: bold;
+        }
+        
+
+    </style>
+    <!-- FontAwesome Icons (for precaution list) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Diabetes Prediction</h1>
+        <form id="prediction-form" method="POST">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="pregnancies">Pregnancies:</label>
+                    <input type="number" name="pregnancies" placeholder="Enter number of pregnancies" required>
+                </div>
+                <div class="form-group">
+                    <label for="glucose">Glucose:</label>
+                    <input type="number" name="glucose" placeholder="Enter glucose level" required>
+                </div>
+                <div class="form-group">
+                    <label for="blood_pressure">Blood Pressure:</label>
+                    <input type="number" name="blood_pressure" placeholder="Enter blood pressure" required>
+                </div>
+                <div class="form-group">
+                    <label for="skin_thickness">Skin Thickness:</label>
+                    <input type="number" name="skin_thickness" placeholder="Enter skin thickness" required>
+                </div>
+                <div class="form-group">
+                    <label for="insulin">Insulin:</label>
+                    <input type="number" name="insulin" placeholder="Enter insulin level" required>
+                </div>
+                <div class="form-group">
+                    <label for="bmi">BMI:</label>
+                    <input type="text" name="bmi" placeholder="Enter BMI (e.g., 23.5)" required>
+                </div>
+                <div class="form-group">
+                    <label for="diabetes_pedigree_function">Diabetes Pedigree Function:</label>
+                    <input type="text" name="diabetes_pedigree_function" placeholder="Enter DPF value" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" name="age" placeholder="Enter age" required>
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="submit" id="predict-button">Predict</button>
+                <button type="reset" id="reset-button">Reset</button>
+            </div>
+        </form>
+
+        <!-- Result Section -->
+        <div id="result">
+            <h2>Prediction Result:</h2>
+            <p id="result-output"></p>
+        </div>
+
+        <!-- Precautions Section -->
+        <div id="precautions">
+            <h2>Precautions:</h2>
+            <p id="precaution-output"></p>
+            <div class="note">
+                <p><strong>Note:</strong> Always consult a healthcare provider for an accurate diagnosis and personalized recommendations.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("prediction-form");
+        const resultSection = document.getElementById("result");
+        const resultOutput = document.getElementById("result-output");
+        const precautionsSection = document.getElementById("precautions");
+        const precautionOutput = document.getElementById("precaution-output");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent page reload
+            resultSection.style.display = "none"; // Hide previous result
+            precautionsSection.style.display = "none"; // Hide previous precautions
+
+            const formData = new FormData(form);
+            const glucose = parseFloat(formData.get("glucose"));
+            const bmi = parseFloat(formData.get("bmi"));
+            const age = parseInt(formData.get("age"));
+            
+            // Improved Risk Level Calculation based on user input
+            let riskLevel = "Low";
+            let riskMessage = "";
+
+            if (glucose > 140 || bmi > 30 || age > 40) {
+                riskLevel = "High";
+                riskMessage = "Diabetes is already present, or it may occur in the next 0–5 years due to elevated glucose, BMI, or age.";
+            } else if ((glucose >= 110 && glucose <= 140) || (bmi >= 25 && bmi <= 30) || age >= 35) {
+                riskLevel = "Moderate";
+                riskMessage = "You are at moderate risk and may develop diabetes in 5–10 years if no intervention is made.";
+            } else {
+                riskLevel = "Low";
+                riskMessage = "Diabetes is unlikely to occur in the next 10–20 years unless lifestyle changes are made.";
+            }
+
+            // Simulated backend prediction
+            setTimeout(() => {
+                if (riskLevel === "High") {
+                    resultOutput.textContent = "Positive for Diabetes.";
+                    precautionOutput.innerHTML = `
+                        <ul>
+                            <li><i class="fas fa-utensils"></i> Follow a healthy diet.</li>
+                            <li><i class="fas fa-running"></i> Be active every day for at least 30 minutes.</li>
+                            <li><i class="fas fa-weight"></i> Keep your weight in a healthy range.</li>
+                            <li><i class="fas fa-medkit"></i> Check your blood sugar often and follow your doctor's advice.</li>
+
+                        </ul>
+                        You currently have diabetes. Immediate care and regular monitoring are essential.`;
+                } else if (riskLevel === "Moderate") {
+                    resultOutput.textContent = "Borderline Risk: You are at moderate risk for diabetes.";
+                    precautionOutput.innerHTML = `
+                        <ul>
+                            <li><i class="fas fa-balance-scale"></i> Eat foods that don't cause a quick rise in blood sugar.</li>
+                            <li><i class="fas fa-dumbbell"></i> Exercise moderately (3-4 times a week).</li>
+                            <li><i class="fas fa-tint"></i> Drink plenty of water to stay hydrated.</li>
+                            <li><i class="fas fa-heartbeat"></i> Check your blood sugar levels regularly.</li>
+                        </ul>
+                        Diabetes may develop in the next 5–10 years.`;
+                } else {
+                    resultOutput.textContent = "Low Risk: Currently, you do not have diabetes.";
+                    precautionOutput.innerHTML = `
+                        <ul>
+                           <li><i class="fas fa-carrot"></i> Eat a balanced diet and stay active.</li>
+                            <li><i class="fas fa-chair"></i> Avoid sitting for long periods.</li>
+                            <li><i class="fas fa-calendar-check"></i> Get your blood sugar tested every year.</li>
+                        </ul>
+                        Diabetes may develop in the next 10–20 years if no changes are made.`;
+                }
+
+                // Display result and precautions sections
+                resultSection.style.display = "block";
+                precautionsSection.style.display = "block";
+            }, 500);
+        });
+    </script>
+    
+    
+</body>
+</html>
