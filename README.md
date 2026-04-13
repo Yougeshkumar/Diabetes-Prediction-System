@@ -5,8 +5,7 @@ A production-ready Machine Learning web application that predicts whether a pers
 ---
 
 ## 🌐 Live Demo
-
-🚀 *Coming Soon... (Will be deployed on Render)*
+🔗 https://diabetes-prediction-system-78xt.onrender.com
 
 ---
 
